@@ -8,18 +8,18 @@ public class CountInversions {
 
     static class vecInt {
         Vector<Integer> nums;
-        Integer num;
+        long num;
 
-        vecInt(Vector<Integer> vec, Integer n){
+        vecInt(Vector<Integer> vec, Long n){
             this.nums = vec;
-            this.num = n;
+            this.num = n.longValue();
         }
     }
 
     static vecInt mySort(Vector<Integer> nums){
 
         if(nums.size() == 1){
-            vecInt sorted_numbers = new vecInt(nums, 0);
+            vecInt sorted_numbers = new vecInt(nums, new Long(0));
             return sorted_numbers;
         }
         else{
@@ -27,7 +27,6 @@ public class CountInversions {
             Vector<Integer> fhalf = half_splits.get(0), shalf = half_splits.get(1);
 
             vecInt fhalf_sort = mySort(fhalf), shalf_sort = mySort(shalf);
-
             return countMerge(fhalf_sort, shalf_sort);
         }
     }
@@ -58,7 +57,7 @@ public class CountInversions {
     static vecInt countMerge(vecInt fhalfTup, vecInt shalfTup){
 
         Vector<Integer> fhalf = fhalfTup.nums, shalf = shalfTup.nums;
-        Integer inv = fhalfTup.num + shalfTup.num;
+        long inv = fhalfTup.num + shalfTup.num, mergeInv = 0;
 
         Integer f = 0, s = 0;
         Integer F = fhalf.size(), S = shalf.size();
@@ -73,8 +72,11 @@ public class CountInversions {
             else{
                 mergedVec.add(sElem);
                 s = s+1;
-                Integer tmpInv = F - f;
-                inv = inv + tmpInv;
+                Long tmpInv = new Long(F - f);
+                mergeInv = mergeInv + tmpInv.longValue();
+                if ( inv + mergeInv < 0) {
+                    System.out.println(String.format("inv: %d, mergeInv: %d", inv, mergeInv));
+                }
             }
         }
 
@@ -88,8 +90,7 @@ public class CountInversions {
             s = s+1;
         }
 
-        vecInt  vecInt = new vecInt(mergedVec, inv);
-
+        vecInt  vecInt = new vecInt(mergedVec, inv + mergeInv);
         return  vecInt;
     }
 

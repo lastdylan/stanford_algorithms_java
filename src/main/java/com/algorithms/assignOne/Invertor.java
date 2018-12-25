@@ -9,7 +9,7 @@ public class Invertor
     String output_filepath;
     Vector<Integer> unsorted_vector;
     Vector<Integer> sorted_vector;
-    Integer inversions;
+    Long inversions;
 
     public Invertor(String ipath, String opath){
         this.filepath = ipath;
@@ -41,27 +41,23 @@ public class Invertor
         sorted_vector = numbers;
     }
 
-    public void set_inversions(int inv){
+    public void set_inversions(Long inv){
         inversions = inv;
     }
 
     public void write_sorted_vector() throws IOException {
 
-        File file = new File(output_filepath);
-
-        if (!file.exists()){
-            throw new IOException();
-        }
-
-        FileWriter fw = new FileWriter(file);
-        fw.write(String.format("It took %d inversions to sort this file", inversions));
-        fw.write("-------------");
-        fw.write("");
+        FileWriter fw = new FileWriter(output_filepath);
+        BufferedWriter bw = new BufferedWriter(fw);
+        bw.write(String.format("It took %d inversions to sort this file\n", inversions));
+        bw.write("-------------\n");
+        bw.write("\n");
 
         for(Integer number: sorted_vector){
-            fw.write(String.format("%d", number));
+            bw.write(String.format("%d\n", number));
         }
 
+        bw.close();
         fw.close();
     }
 

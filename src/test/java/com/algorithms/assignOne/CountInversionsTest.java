@@ -14,7 +14,7 @@ public class CountInversionsTest {
     Integer[] farrayOne = {3, 7}, sarrayOne = {1, 4, 2};
     Integer[] sorted_arrayOne = {1, 2, 3, 4, 7};
     Integer[] sorted_farrayOne = {3, 7}, sorted_sarrayOnee = {1, 2, 4};
-    Integer invOne = 6;
+    long invOne = 6;
     Vector<Integer> vecOne = new Vector<>(Arrays.asList(arrayOne));
     Vector<Integer> sorted_vecOne = new Vector<>(Arrays.asList(sorted_arrayOne));
     Vector<Integer> fVecOne = new Vector<>(Arrays.asList(farrayOne));
@@ -47,12 +47,12 @@ public class CountInversionsTest {
 
     @Test
     public void countMerge() {
-        CountInversions.vecInt ftup = new CountInversions.vecInt(sorted_fVecOne, 0);
-        CountInversions.vecInt stup = new CountInversions.vecInt(sorted_sVecOne, 1);
+        CountInversions.vecInt ftup = new CountInversions.vecInt(sorted_fVecOne, new Long(0));
+        CountInversions.vecInt stup = new CountInversions.vecInt(sorted_sVecOne, new Long(1));
 
         CountInversions.vecInt cmergeTup = CountInversions.countMerge(ftup, stup);
 
-        assertEquals(new Integer(6), cmergeTup.num);
+        assertEquals(new Long(6).longValue(), cmergeTup.num);
         assertEquals(sorted_vecOne, cmergeTup.nums);
     }
 }
