@@ -1,5 +1,7 @@
 package com.algorithms.assignOne;
 
+import org.apache.commons.cli.*;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Vector;
@@ -96,11 +98,40 @@ public class CountInversions {
 
     public static void main(String[] args) throws IOException {
 
-        Invertor invertor = new Invertor(args[0], args[1]);
-        vecInt sortedTuple = mySort(invertor.unsorted_vector);
-        invertor.set_sorted_vector(sortedTuple.nums);
-        invertor.set_inversions(sortedTuple.num);
-        invertor.write_sorted_vector();
+        Options options = new Options();
+
+        Option input = new Option("i", "input", true, "Input file path");
+        input.setRequired(true);
+        options.addOption(input);
+
+        Option output = new Option("o", "output", true, "Output file path");
+        output.setRequired(true);
+        options.addOption(output);
+
+
+        CommandLineParser parser = new DefaultParser();
+        HelpFormatter formatter = new HelpFormatter();
+        CommandLine cmd;
+
+        try {
+            cmd = parser.parse(options, args);
+
+            String inputFilePath = cmd.getOptionValue("input");
+            String outputFilePath = cmd.getOptionValue("output");
+
+            Invertor invertor = new Invertor(inputFilePath, outputFilePath);
+            vecInt sortedTuple = mySort(invertor.unsorted_vector);
+            invertor.set_sorted_vector(sortedTuple.nums);
+            invertor.set_inversions(sortedTuple.num);
+            invertor.write_sorted_vector();
+
+        } catch (ParseException e) {
+            System.out.println(e.getMessage());
+            formatter.printHelp("utility-name", options);
+
+            System.exit(1);
+        }
+
 
     }
 }
